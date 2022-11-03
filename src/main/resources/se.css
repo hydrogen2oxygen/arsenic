@@ -1,0 +1,30 @@
+.debug {
+    background-color: #dcbd00;
+}
+
+.SUCCESS {
+    background-color: #7bff00;
+}
+
+.FAIL {
+    background-color: #dc0000;
+    color: white;
+}
+
+.PRECONDITION_FAIL {
+    background-color: #ffc502;
+}
+
+.TECHNICAL_ERROR {
+    background-color: #ab0000;
+    color: white;
+}
+
+.SKIPPED {
+    background-color: #424242;
+    color: white;
+}
+
+.UNKNOWN {
+    background-color: #00ffff;
+}
