@@ -38,8 +38,8 @@ public abstract class AbstractBaseAutomation implements IAutomation {
             protocol = new Protocol();
         }
         protocol.setTitle(this.getClass().getSimpleName());
-        protocol.setProtocolsPath(env.getData().get(Se.PROTOCOLS_PATH));
-        protocol.setScreenshotPath(env.getData().get(Se.SCREENSHOTS_PATH));
+        protocol.setProtocolsPath(env.get(Se.PROTOCOLS_PATH));
+        protocol.setScreenshotPath(env.get(Se.SCREENSHOTS_PATH));
 
         this.wd.setProtocol(protocol);
     }
@@ -97,8 +97,8 @@ public abstract class AbstractBaseAutomation implements IAutomation {
 
     public void initProtocol(String title) {
         protocol.setTitle(title);
-        protocol.setProtocolsPath(env.getData().get(Se.PROTOCOLS_PATH));
-        protocol.setScreenshotPath(env.getData().get(Se.SCREENSHOTS_PATH));
+        protocol.setProtocolsPath(env.get(Se.PROTOCOLS_PATH));
+        protocol.setScreenshotPath(env.get(Se.SCREENSHOTS_PATH));
     }
 
     private Integer getTimeOut() {
@@ -115,12 +115,12 @@ public abstract class AbstractBaseAutomation implements IAutomation {
 
     @Override
     public void checkPreconditions() throws PreconditionsException {
-
+        // implement one in your class, this is the abstract class
     }
 
     @Override
     public void cleanUp() throws CleanUpException {
-
+        // implement one in your class, this is the abstract class
     }
 
 }

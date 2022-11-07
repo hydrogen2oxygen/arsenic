@@ -43,19 +43,15 @@ class SeTest {
             Environment environment = Se.loadEnvironment();
             // add a group
             Group group1 = new Group("GitHub1", environment);
-            group1.add(new OpenGithubSearchSelenium());
-            group1.add(new OpenGithubSearchHydrogen2oxygen());
+            group1.add(new OpenGithubSearchSelenium()).add(new OpenGithubSearchHydrogen2oxygen());
 
             // and a second group
             Group group2 = new Group("GitHub2", environment);
-            group2.add(new OpenGithubSearchElectron());
-            group2.add(new OpenGithubSearchSpringBoot());
+            group2.add(new OpenGithubSearchElectron()).add(new OpenGithubSearchSpringBoot());
 
             // run group 1 and 2 in parallel
             Parallel parallel = new Parallel("Parallel Selenium Run, prove of concept", environment);
-            parallel.add(group1);
-            parallel.add(group2);
-            parallel.run();
+            parallel.add(group1).add(group2).run();
 
             ProtocolGeneratorHtml protocolGeneratorHtml = new ProtocolGeneratorHtml();
             protocolGeneratorHtml.generateHtml(parallel);

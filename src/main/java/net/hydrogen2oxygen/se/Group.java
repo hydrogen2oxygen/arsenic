@@ -54,9 +54,10 @@ public class Group extends AbstractBaseAutomation {
      *
      * @param automation to run
      */
-    public void add(IAutomation automation) {
+    public Group add(IAutomation automation) {
         automation.setSe(se);
         automationList.add(automation);
+        return this;
     }
 
     @Override

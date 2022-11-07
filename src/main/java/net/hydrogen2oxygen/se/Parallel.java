@@ -84,8 +84,9 @@ public class Parallel extends AbstractBaseAutomation {
      *
      * @param automation to add
      */
-    public void add(IAutomation automation) {
+    public Parallel add(IAutomation automation) {
         automationList.add(automation);
+        return this;
     }
 
     public List<IAutomation> getAutomationList() {
