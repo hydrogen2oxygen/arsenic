@@ -21,6 +21,9 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.List;
 
+/**
+ * Default WebDriver location is ".." (relativ parent folder), until it is configured differently
+ */
 public class HyperWebDriver {
 
     private Boolean closed = false;
