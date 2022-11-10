@@ -6,7 +6,7 @@
 
     <groupId>net.hydrogen2oxygen.arsenic</groupId>
     <artifactId>arsenic</artifactId>
-    <version>1.0.7-SNAPSHOT</version>
+    <version>1.0.8-SNAPSHOT</version>
     <name>Arsenic</name>
     <description>Selenium wrapper which enables groups and parallel execution</description>
     <url>https://github.com/hydrogen2oxygen/arsenic</url>
