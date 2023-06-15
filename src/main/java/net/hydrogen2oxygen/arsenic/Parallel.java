@@ -64,7 +64,12 @@ public class Parallel extends AbstractBaseAutomation {
         es.shutdown();
         boolean finished = false;
         try {
-            finished = es.awaitTermination(env.getInt("parallel.timeout.minutes"), TimeUnit.MINUTES);
+            Integer parallelTimeOutMinutes = env.getInt("parallel.timeout.minutes");
+            if (parallelTimeOutMinutes == null) {
+                parallelTimeOutMinutes = 15;
+                logger.info("parallel.timeout.minutes not set, using default of 15 minutes");
+            }
+            finished = es.awaitTermination(parallelTimeOutMinutes, TimeUnit.MINUTES);
         } catch (InterruptedException e) {
             es.shutdownNow();
             throw new WrappedCheckedException("Shutdown forced", e);

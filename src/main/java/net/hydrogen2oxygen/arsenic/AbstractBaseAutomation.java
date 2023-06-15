@@ -37,6 +37,8 @@ public abstract class AbstractBaseAutomation implements IAutomation {
             // for test purposes, set new only if it is still empty
             protocol = new Protocol();
         }
+
+        protocol.setEnv(env);
         protocol.setTitle(this.getClass().getSimpleName());
         protocol.setProtocolsPath(env.get(Se.PROTOCOLS_PATH));
         protocol.setScreenshotPath(env.get(Se.SCREENSHOTS_PATH));

@@ -1,9 +1,14 @@
 package net.hydrogen2oxygen.arsenic;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Environment {
+
+    private static final Logger logger = LogManager.getLogger(Environment.class);
 
     private String name;
     private Map<String, String> data = new HashMap<>();
@@ -29,7 +34,15 @@ public class Environment {
     }
 
     public Integer getInt(String key) {
-        return Integer.parseInt(get(key));
+        try {
+            String value = get(key);
+            if (value != null) {
+                return Integer.parseInt(value);
+            }
+        } catch (NumberFormatException e) {
+            logger.error(e);
+        }
+        return null;
     }
 
     /**

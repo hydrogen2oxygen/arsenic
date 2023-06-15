@@ -2,6 +2,7 @@ package net.hydrogen2oxygen.arsenic.protocol;
 
 import j2html.tags.DomContent;
 import j2html.tags.specialized.*;
+import net.hydrogen2oxygen.arsenic.Environment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +19,10 @@ public class Protocol {
     private String title;
     private String screenshotPath;
     private String protocolsPath;
+    private Environment env;
 
     public enum ProtocolType {
-        H1, H2, H3, H4, PARAGRAPH, DEBUG, INFO, WARNING, ERROR, PRECONDITION_FAIL, SCREENSHOT,
+        H1, H2, H3, H4, HR, PARAGRAPH, DEBUG, INFO, WARNING, ERROR, PRECONDITION_FAIL, SCREENSHOT,
         SCREENSHOT_WITH_DESCRIPTION, ASSERT_SUCCESS, ASSERT_FAIL, UNEXPECTED_TECHNICAL_ERROR,
         SKIP
     }
@@ -55,7 +57,13 @@ public class Protocol {
      * @param message to protocol
      */
     public void debug(String message) {
-        add(ProtocolType.DEBUG, message);
+        if (env != null && "TRUE".equals(env.get("DEBUG"))) {
+            add(ProtocolType.DEBUG, message);
+        }
+    }
+
+    public void hrLine() {
+        add(ProtocolType.HR);
     }
 
     public void info(String message) {
@@ -102,29 +110,25 @@ public class Protocol {
         protocolEntryList.add(new ProtocolEntry(protocolType, data));
     }
 
+    private void add(ProtocolType protocolType) {
+        protocolEntryList.add(new ProtocolEntry(protocolType, null));
+    }
+
     public static class ProtocolEntry {
 
         private final ProtocolType protocolType;
-        private final String data;
+        private String data = "";
 
         public ProtocolEntry(ProtocolType protocolType, String data) {
             this.protocolType = protocolType;
             this.data = data;
         }
 
-        public ProtocolType getProtocolType() {
-            return protocolType;
-        }
-
-        public String getData() {
-            return data;
-        }
-
         public DomContent getDomContent() {
 
             switch (this.protocolType) {
                 case DEBUG:
-                    return new SpanTag().withClass("debug").withText(data);
+                    return new DivTag().with(span(data).withClass("debug"));
                 case PARAGRAPH:
                     return new PTag().withText(data);
                 case INFO:
@@ -135,6 +139,8 @@ public class Protocol {
                 case PRECONDITION_FAIL:
                 case UNEXPECTED_TECHNICAL_ERROR:
                     return new DivTag().with(span(data).withClasses("badge", "bg-danger"));
+                case HR:
+                    return new DivTag().with(hr());
                 case H1:
                     return new H1Tag().withText(data);
                 case H2:
@@ -147,6 +153,10 @@ public class Protocol {
                     return new PreTag().with(a().with(img().withSrc(data).withHeight("400px")).withHref(data).withTarget(data));
                 case SCREENSHOT_WITH_DESCRIPTION:
                     return createScreenShotCard(data);
+                case ASSERT_SUCCESS:
+                    return new DivTag().with(span(data).withClass("SUCCESS"));
+                case ASSERT_FAIL:
+                    return new DivTag().with(span(data).withClass("FAIL"));
                 default:
                     return new DivTag().withText(protocolType.name() + " - " + data);
             }
@@ -239,5 +249,9 @@ public class Protocol {
 
     public void setProtocolsPath(String protocolsPath) {
         this.protocolsPath = protocolsPath;
+    }
+
+    public void setEnv(Environment env) {
+        this.env = env;
     }
 }

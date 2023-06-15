@@ -70,7 +70,7 @@ public class ProtocolGeneratorHtml {
                 protocol.getProtocolEntryList().stream().map(p ->
                         p.getDomContent()
                 ).toArray(ContainerTag[]::new)
-        ));
+        ).withClasses("container"));
 
         BodyTag body = body(
                 content.toArray(new DomContent[0])

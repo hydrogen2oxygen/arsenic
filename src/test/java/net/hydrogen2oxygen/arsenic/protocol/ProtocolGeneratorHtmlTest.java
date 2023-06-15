@@ -27,22 +27,24 @@ class ProtocolGeneratorHtmlTest {
             targetFolder.mkdirs();
         }
 
-        System.setProperty("environment", "/exampleEnvironment.json");
+        System.setProperty("environment", "exampleEnvironment.json");
         Environment environment = Se.loadEnvironment();
 
         TestAutomation testAutomation = new TestAutomation();
         Protocol protocol = testAutomation.getProtocol();
         protocol.setTitle("SingleTest");
         protocol.setProtocolsPath("target/");
+        protocol.hrLine();
         protocol.h1("Simple Protocol Test");
         protocol.paragraph("This will include hopefully every available element.");
         protocol.debug("For test purposes!");
         protocol.info("This is a info.");
         protocol.warn("And this is a warning!");
-        protocol.error("Beware, this one is a error!!!");
-        protocol.h2("Asserts");
-        protocol.assertSuccess("Some will succeed.");
-        protocol.assertFail("Other will maybe fail!");
+        protocol.warn("Another warning!");
+        protocol.error("error = Beware, this one is a error!!!");
+        protocol.h2("h2 = Asserts");
+        protocol.assertSuccess("assertSuccess = Some will succeed.");
+        protocol.assertFail("assertFail = Other will maybe fail!");
         protocol.h3("And there is more");
         protocol.preconditionFail("... like for example if a precondition fails ...");
         protocol.unexpectedTechnicalError("or even an unexpected technical error occurs");
