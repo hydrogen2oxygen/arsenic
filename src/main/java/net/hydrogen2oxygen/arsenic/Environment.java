@@ -12,6 +12,7 @@ public class Environment {
 
     private String name;
     private Map<String, String> data = new HashMap<>();
+    private Map<String, Environment> additionalEnvironments = new HashMap<>();
 
     public String getName() {
         return name;
@@ -32,6 +33,11 @@ public class Environment {
     public String get(String key) {
         return getData().get(key);
     }
+    public String get(String environmentName, String key) {
+        Environment environment = additionalEnvironments.get(environmentName);
+        if (environment == null) return null;
+        return environment.get(key);
+    }
 
     public Integer getInt(String key) {
         try {
@@ -46,12 +52,20 @@ public class Environment {
     }
 
     /**
-     * Add additional data from another environment object
+     * Add more data from another environment object
      *
      * @param env to use
      */
     public void addEnvironment(Environment env) {
         data.putAll(env.getData());
+    }
+
+    /**
+     * Add additional environment, that might have the same key for different values
+     * @param env
+     */
+    public void addAdditionalEnvironment(Environment env) {
+        additionalEnvironments.put(env.name, env);
     }
 
     public boolean getBoolean(String key) {

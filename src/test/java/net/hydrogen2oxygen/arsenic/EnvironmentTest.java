@@ -50,5 +50,16 @@ class EnvironmentTest {
         exampleEnvironment.addEnvironment(baseEnvironment);
         Assertions.assertEquals("abc", exampleEnvironment.getData().get("common.value"));
 
+        Environment testDataScenario1 = new Environment();
+        testDataScenario1.setName("testDataScenario1");
+        testDataScenario1.getData().put("test.name","John");
+        Environment testDataScenario2 = new Environment();
+        testDataScenario2.setName("testDataScenario2");
+        testDataScenario2.getData().put("test.name","Jack");
+
+        exampleEnvironment.addAdditionalEnvironment(testDataScenario1);
+        exampleEnvironment.addAdditionalEnvironment(testDataScenario2);
+        Assertions.assertEquals("John", exampleEnvironment.get("testDataScenario1","test.name"));
+        Assertions.assertEquals("Jack", exampleEnvironment.get("testDataScenario2","test.name"));
     }
 }
