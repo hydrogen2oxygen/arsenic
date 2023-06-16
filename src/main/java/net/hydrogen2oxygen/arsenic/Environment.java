@@ -71,4 +71,8 @@ public class Environment {
     public boolean getBoolean(String key) {
         return Boolean.parseBoolean(get(key));
     }
+
+    public Environment getAdditionalEnvironment(String name) {
+        return additionalEnvironments.get(name);
+    }
 }
