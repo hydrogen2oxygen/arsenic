@@ -28,22 +28,24 @@ public class OpenGithubSearchSpringBoot extends AbstractBaseAutomation {
     public void run() {
 
         try {
+            protocol.info("searching for springboot");
             wd.openPage("https://github.com/hydrogen2oxygen/arsenic")
-                    .waitMillis(1000)
+                    .waitMillis(2000)
                     .textByName("q", "springboot")
                     .sendReturnForElementByName("q")
-                    .screenshot();
+                    .screenshot("Github Search","See if the result shows what you need!");
+
         } catch (Exception e) {
             throw new WrappedCheckedException(e);
         }
 
-        String html = wd.getHtml();
+        /*String html = wd.getHtml();
         Document doc = Jsoup.parse(html);
         Elements elements = doc.select("a");
 
         for (Element element : elements) {
             logger.debug(element.text());
-        }
+        }*/
     }
 
     @Override

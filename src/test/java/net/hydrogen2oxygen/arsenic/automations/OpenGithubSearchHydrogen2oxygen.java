@@ -4,6 +4,7 @@ import net.hydrogen2oxygen.arsenic.AbstractBaseAutomation;
 import net.hydrogen2oxygen.arsenic.exceptions.CleanUpException;
 import net.hydrogen2oxygen.arsenic.exceptions.PreconditionsException;
 import net.hydrogen2oxygen.arsenic.exceptions.WrappedCheckedException;
+import net.hydrogen2oxygen.arsenic.protocol.Protocol;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
@@ -20,6 +21,10 @@ public class OpenGithubSearchHydrogen2oxygen extends AbstractBaseAutomation {
 
     private static Logger logger = LogManager.getLogger(OpenGithubSearchHydrogen2oxygen.class);
 
+    public OpenGithubSearchHydrogen2oxygen() {
+        super();
+    }
+
     @Override
     public void checkPreconditions() throws PreconditionsException {
         assertNotNull(wd);
@@ -31,15 +36,16 @@ public class OpenGithubSearchHydrogen2oxygen extends AbstractBaseAutomation {
 
         try {
             wd.openPage("https://github.com/hydrogen2oxygen/arsenic")
-                    .waitMillis(1000)
+                    .waitMillis(2000)
                     .textByName("q", "hydrogen2oxygen")
                     .sendReturnForElementByName("q")
                     .screenshot();
+            protocol.info("arsenic search done!");
         } catch (Exception e) {
             throw new WrappedCheckedException(e);
         }
 
-        String html = wd.getHtml();
+        /*String html = wd.getHtml();
         Document doc = Jsoup.parse(html);
         Elements elements = doc.select("a");
         ListIterator<Element> iter = elements.listIterator();
@@ -47,7 +53,7 @@ public class OpenGithubSearchHydrogen2oxygen extends AbstractBaseAutomation {
         while (iter.hasNext()) {
             Element element = iter.next();
             logger.debug(element.text());
-        }
+        }*/
     }
 
     @Override

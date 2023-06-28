@@ -4,6 +4,7 @@ import net.hydrogen2oxygen.arsenic.AbstractBaseAutomation;
 import net.hydrogen2oxygen.arsenic.exceptions.CleanUpException;
 import net.hydrogen2oxygen.arsenic.exceptions.PreconditionsException;
 import net.hydrogen2oxygen.arsenic.exceptions.WrappedCheckedException;
+import net.hydrogen2oxygen.arsenic.protocol.Protocol;
 import net.hydrogen2oxygen.arsenic.snippets.SearchGithub;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +20,9 @@ public class OpenGithubSearchElectron extends AbstractBaseAutomation {
 
     private static final Logger logger = LogManager.getLogger(OpenGithubSearchElectron.class);
 
+    public OpenGithubSearchElectron() {
+    }
+
     @Override
     public void checkPreconditions() throws PreconditionsException {
         assertNotNull(wd);
@@ -30,20 +34,20 @@ public class OpenGithubSearchElectron extends AbstractBaseAutomation {
 
         try {
             wd.openPage("https://github.com/hydrogen2oxygen/arsenic")
-                    .waitMillis(1000);
+                    .waitMillis(2000);
         } catch (InterruptedException e) {
             throw new WrappedCheckedException(e);
         }
 
         snippet(new SearchGithub("electron"));
 
-        String html = wd.getHtml();
+        /*String html = wd.getHtml();
         Document doc = Jsoup.parse(html);
         Elements elements = doc.select("a");
 
         for (Element element : elements) {
             logger.debug(element.text());
-        }
+        }*/
     }
 
     @Override

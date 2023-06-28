@@ -4,6 +4,7 @@ import net.hydrogen2oxygen.arsenic.exceptions.CleanUpException;
 import net.hydrogen2oxygen.arsenic.exceptions.EnvironmentException;
 import net.hydrogen2oxygen.arsenic.exceptions.HyperWebDriverException;
 import net.hydrogen2oxygen.arsenic.exceptions.PreconditionsException;
+import net.hydrogen2oxygen.arsenic.protocol.Protocol;
 import net.hydrogen2oxygen.arsenic.selenium.HyperWebDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,6 +28,7 @@ public class Group extends AbstractBaseAutomation {
      * @param groupName name of thread group
      */
     public Group(Se se, String groupName) {
+        super(se.getWebDriver().getProtocol());
         this.setSe(se);
         this.groupName = groupName;
         initProtocol(groupName);
@@ -42,6 +44,7 @@ public class Group extends AbstractBaseAutomation {
      * @throws EnvironmentException    see {@link Se#getInstance(Environment, HyperWebDriver.DriverTypes)}
      */
     public Group(String groupName, Environment environment) throws HyperWebDriverException, IOException, EnvironmentException {
+        super(new Protocol());
         this.se = Se.getInstance(environment, null);
         this.se.setEnvironment(environment);
         setSe(se);

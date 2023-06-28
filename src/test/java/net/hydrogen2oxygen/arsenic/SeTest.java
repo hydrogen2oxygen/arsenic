@@ -29,6 +29,9 @@ class SeTest {
             se.run(openGithubSearchSelenium);
             se.getWebDriver().close();
 
+            ProtocolGeneratorHtml protocolGeneratorHtml = new ProtocolGeneratorHtml();
+            protocolGeneratorHtml.generateHtml(openGithubSearchSelenium);
+
         } catch (HyperWebDriverException e) {
             logger.error("Check your driver configuration please!", e);
         } catch (Exception e) {

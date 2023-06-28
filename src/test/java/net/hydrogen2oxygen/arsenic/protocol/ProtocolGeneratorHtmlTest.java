@@ -69,6 +69,8 @@ class ProtocolGeneratorHtmlTest {
     private class TestAutomation extends AbstractBaseAutomation {
 
 
+        private TestAutomation() {}
+
         @Override
         public void checkPreconditions() throws PreconditionsException {
 

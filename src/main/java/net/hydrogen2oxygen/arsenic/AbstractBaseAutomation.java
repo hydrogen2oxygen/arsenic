@@ -25,18 +25,21 @@ public abstract class AbstractBaseAutomation implements IAutomation {
     protected Se se;
     protected HyperWebDriver wd;
     protected Environment env;
-    protected Protocol protocol = new Protocol();
+    protected final Protocol protocol;
+
+    protected AbstractBaseAutomation(Protocol protocol) {
+        this.protocol = protocol;
+    }
+
+    protected AbstractBaseAutomation() {
+        this.protocol = new Protocol();
+    }
 
     @Override
     public void setSe(Se se) {
         this.se = se;
         this.env = se.getEnvironment();
         this.wd = se.getWebDriver();
-
-        if (protocol == null) {
-            // for test purposes, set new only if it is still empty
-            protocol = new Protocol();
-        }
 
         protocol.setEnv(env);
         protocol.setTitle(this.getClass().getSimpleName());
@@ -123,15 +126,6 @@ public abstract class AbstractBaseAutomation implements IAutomation {
     @Override
     public void cleanUp() throws CleanUpException {
         // implement one in your class, this is the abstract class
-    }
-
-    protected void screenshot() {
-        try {
-            wd.screenshot();
-        } catch (IOException e) {
-            protocol.error("Error taking Screenshot");
-            e.printStackTrace();
-        }
     }
 
 }

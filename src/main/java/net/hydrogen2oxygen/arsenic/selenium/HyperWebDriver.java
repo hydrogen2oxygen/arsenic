@@ -4,6 +4,8 @@ import net.hydrogen2oxygen.arsenic.exceptions.CommandExecutionException;
 import net.hydrogen2oxygen.arsenic.exceptions.HyperWebDriverException;
 import net.hydrogen2oxygen.arsenic.protocol.Protocol;
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -15,7 +17,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
@@ -25,6 +26,8 @@ import java.util.List;
  * Default WebDriver location is ".." (relativ parent folder), until it is configured differently
  */
 public class HyperWebDriver {
+
+    private static final Logger logger = LogManager.getLogger(HyperWebDriver.class);
 
     private Boolean closed = false;
     private WebDriver driver;
@@ -258,33 +261,46 @@ public class HyperWebDriver {
         return this;
     }
 
-    public File screenshot() throws IOException {
+    public File screenshot() {
         return screenshot(null, null);
     }
 
-    public File screenshot(String title, String description) throws IOException {
+    public File screenshot(String title, String description) {
 
-        File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        try {
+            waitMillis(500);
+            File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
-        if (protocol.getScreenshotPath() != null) {
-            File folder = new File(protocol.getScreenshotPath());
-
-            if (!folder.exists()) {
-                folder.mkdirs();
+            File protocolsFolder = new File(protocol.getProtocolsPath());
+            if (!protocolsFolder.exists()) {
+                protocolsFolder.mkdirs();
             }
 
-            File newFile = new File(protocol.getScreenshotPath() + file.getName());
-            FileUtils.copyFile(file, newFile);
+            if (protocol.getScreenshotPath() != null) {
+                File folder = new File(protocol.getScreenshotPath());
 
-            if (title != null) {
-                protocol.screenshot(title, description, file.getName());
-            } else {
-                protocol.screenshot(file.getName());
+                if (!folder.exists()) {
+                    folder.mkdirs();
+                }
+
+                File newFile = new File(protocol.getScreenshotPath() + file.getName());
+                FileUtils.copyFile(file, newFile);
+
+                if (title != null) {
+                    protocol.screenshot(title, description, file.getName());
+                } else {
+                    protocol.screenshot(file.getName());
+                }
+                return newFile;
             }
-            return newFile;
+
+            return file;
+        } catch (Exception e) {
+            protocol.error("Error taking Screenshot");
+            logger.error(e);
         }
 
-        return file;
+        return null;
     }
 
     public String getHtml() {

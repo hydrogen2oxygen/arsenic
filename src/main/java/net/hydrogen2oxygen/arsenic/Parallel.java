@@ -3,6 +3,7 @@ package net.hydrogen2oxygen.arsenic;
 import net.hydrogen2oxygen.arsenic.exceptions.CleanUpException;
 import net.hydrogen2oxygen.arsenic.exceptions.ParallelExecutionException;
 import net.hydrogen2oxygen.arsenic.exceptions.WrappedCheckedException;
+import net.hydrogen2oxygen.arsenic.protocol.Protocol;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
@@ -20,6 +21,7 @@ public class Parallel extends AbstractBaseAutomation {
     private final List<IAutomation> automationList = new ArrayList<>();
 
     public Parallel(String parallelName, Environment env) {
+        super(new Protocol());
         this.env = env;
         initProtocol(parallelName);
     }

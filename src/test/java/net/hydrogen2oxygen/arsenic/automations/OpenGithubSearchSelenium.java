@@ -36,16 +36,17 @@ public class OpenGithubSearchSelenium extends AbstractBaseAutomation {
 
         try {
             wd.openPage("https://github.com/hydrogen2oxygen/arsenic")
-                    .waitMillis(1000);
+                    .waitMillis(2000);
             wd.getProtocol().h1("Search in Github");
             wd.textByName("q", "Selenium")
                     .sendReturnForElementByName("q")
-                    .screenshot();
+                    .screenshot("Screenshot","Screenshot shows the Github search page");
+            protocol.info("search arsenic on github done!");
         } catch (Exception e) {
             throw new WrappedCheckedException(e);
         }
 
-        String html = wd.getHtml();
+        /*String html = wd.getHtml();
         Document doc = Jsoup.parse(html);
         Elements elements = doc.select("a");
         ListIterator<Element> iter = elements.listIterator();
@@ -53,7 +54,7 @@ public class OpenGithubSearchSelenium extends AbstractBaseAutomation {
         while (iter.hasNext()) {
             Element element = iter.next();
             logger.debug(element.text());
-        }
+        }*/
     }
 
     @Override

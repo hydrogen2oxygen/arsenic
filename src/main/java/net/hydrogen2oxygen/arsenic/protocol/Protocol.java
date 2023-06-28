@@ -180,16 +180,16 @@ public class Protocol {
                     title = parts[0];
                     url = parts[1];
                 } else if (parts.length == 3) {
-                    title = parts[0];
-                    text = parts[1];
-                    url = parts[2];
+                    text = parts[0];
+                    url = parts[1];
+                    title = parts[2];
                 }
             }
 
             return new DivTag()
                     .withClass("card")
                     .withStyle("width: 18rem")
-                    .with(img().withSrc(url).withClass("card-img-top"),
+                    .with(a(img().withSrc(url).withClass("card-img-top")).withHref(url).withTarget(url),
                             div(h5(title).withClass("card-title"),
                                     p(text).withClass("card-text")).withClass("card-body"));
         }
