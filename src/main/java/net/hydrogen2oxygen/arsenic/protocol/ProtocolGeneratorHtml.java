@@ -32,16 +32,7 @@ public class ProtocolGeneratorHtml {
         String css = IOUtils.resourceToString(cssFile, StandardCharsets.UTF_8);
         List<DomContent> content = new ArrayList<>();
 
-        HeadTag head = head(
-                meta().attr("http-equiv", "cache-control").attr("content", "max-age=0"),
-                meta().attr("http-equiv", "cache-control").attr("content", "no-cache"),
-                meta().attr("http-equiv", "expires").attr("content", "0"),
-                meta().attr("http-equiv", "expires").attr("content", "Tue, 01 Jan 1980 1:00:00 GMT"),
-                meta().attr("http-equiv", "pragma").attr("content", "no-cache"),
-                title(protocol.getTitle()),
-                link().withRel("stylesheet").withHref(BOOTSTRAP_CSS_LINK),
-                style().withText(css)
-        );
+        HeadTag head = getHead(protocol, css);
 
         if (automation instanceof Parallel) {
 
@@ -85,6 +76,20 @@ public class ProtocolGeneratorHtml {
         FileUtils.writeStringToFile(new File(protocol.getProtocolsPath() + protocol.getTitle() + ".html"), html, StandardCharsets.UTF_8);
 
         return html;
+    }
+
+    private static HeadTag getHead(Protocol protocol, String css) {
+        HeadTag head = head(
+                meta().attr("http-equiv", "cache-control").attr("content", "max-age=0"),
+                meta().attr("http-equiv", "cache-control").attr("content", "no-cache"),
+                meta().attr("http-equiv", "expires").attr("content", "0"),
+                meta().attr("http-equiv", "expires").attr("content", "Tue, 01 Jan 1980 1:00:00 GMT"),
+                meta().attr("http-equiv", "pragma").attr("content", "no-cache"),
+                title(protocol.getTitle()),
+                link().withRel("stylesheet").withHref(BOOTSTRAP_CSS_LINK),
+                style().withText(css)
+        );
+        return head;
     }
 
     private void generateOverviewTable(List<DomContent> content, List<IAutomation> automationList) {

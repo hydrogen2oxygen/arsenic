@@ -351,4 +351,8 @@ public class HyperWebDriver {
     public Protocol getProtocol() {
         return protocol;
     }
+
+    public WebDriver getDriver() {
+        return driver;
+    }
 }
