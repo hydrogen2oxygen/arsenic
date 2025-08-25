@@ -1,5 +1,6 @@
 package net.hydrogen2oxygen.arsenic.selenium;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import net.hydrogen2oxygen.arsenic.exceptions.CommandExecutionException;
 import net.hydrogen2oxygen.arsenic.exceptions.HyperWebDriverException;
 import net.hydrogen2oxygen.arsenic.protocol.Protocol;
@@ -43,15 +44,15 @@ public class HyperWebDriver {
     }
 
     public HyperWebDriver(HyperWebDriver.DriverTypes driverType) throws HyperWebDriverException {
-        init(driverType, null, null, false);
+        init(driverType, null, null, false, false);
     }
 
-    public HyperWebDriver(HyperWebDriver.DriverTypes driverType, String remoteUrl, String seleniumDriverDirectory, boolean headless) throws HyperWebDriverException {
+    public HyperWebDriver(HyperWebDriver.DriverTypes driverType, String remoteUrl, String seleniumDriverDirectory, boolean headless, boolean webDriverEnabled) throws HyperWebDriverException {
 
-        init(driverType, remoteUrl, seleniumDriverDirectory, headless);
+        init(driverType, remoteUrl, seleniumDriverDirectory, headless, webDriverEnabled);
     }
 
-    private void init(HyperWebDriver.DriverTypes driverType, String remoteUrl, String seleniumDriverDirectory, boolean headless) throws HyperWebDriverException {
+    private void init(HyperWebDriver.DriverTypes driverType, String remoteUrl, String seleniumDriverDirectory, boolean headless, boolean webDriverEnabled) throws HyperWebDriverException {
 
         this.driverType = driverType;
 
@@ -65,7 +66,10 @@ public class HyperWebDriver {
 
         if (DriverTypes.LOCAL_CHROME.equals(driverType)) {
 
-            // TODO enably by option WebDriverManager.chromedriver().setup();
+            if (webDriverEnabled) {
+                WebDriverManager.chromedriver().setup();
+            }
+
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.setHeadless(headless);
             chromeOptions.addArguments("--remote-allow-origins=*");
@@ -230,7 +234,11 @@ public class HyperWebDriver {
     public void close() {
         protocol.debug("Close connection to browser");
         closed = true;
-        driver.close();
+        try {
+            driver.close();
+        } catch (Exception e) {
+            logger.error("Error closing browser", e);
+        }
     }
 
     public void quit() {

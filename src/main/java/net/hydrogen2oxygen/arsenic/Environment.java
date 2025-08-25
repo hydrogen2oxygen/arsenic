@@ -72,6 +72,11 @@ public class Environment {
         return Boolean.parseBoolean(get(key));
     }
 
+    public boolean setBoolean(String key, boolean value) {
+        data.put(key, Boolean.toString(value));
+        return value;
+    }
+
     public Environment getAdditionalEnvironment(String name) {
         return additionalEnvironments.get(name);
     }

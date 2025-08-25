@@ -1,6 +1,7 @@
 {
   "data": {
     "headless": "false",
+    "webDriverEnabled": "true",
     "nThreads": "8",
     "baseUrl": "https://blabla.thisandthat.com",
     "ping.timeout.milliseconds": "5000",

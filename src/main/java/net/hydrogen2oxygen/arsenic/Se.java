@@ -1,6 +1,7 @@
 package net.hydrogen2oxygen.arsenic;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import net.hydrogen2oxygen.arsenic.exceptions.EnvironmentException;
 import net.hydrogen2oxygen.arsenic.exceptions.HyperWebDriverException;
 import net.hydrogen2oxygen.arsenic.selenium.HyperWebDriver;
@@ -25,6 +26,7 @@ public class Se {
     public static final String PROTOCOLS_PATH = "protocols.path";
     public static final String HEADLESS = "headless";
     public static final String ENVIRONMENT = "environment";
+    private static final String WEBDRIVER_ENABLED = "webDriverEnabled";
     private static final Logger logger = LogManager.getLogger(Se.class);
     private Environment environment;
     private HyperWebDriver webDriver;
@@ -54,7 +56,7 @@ public class Se {
         }
 
         try {
-            webDriver = new HyperWebDriver(webDriverType, environment.get("baseUrl"), null, environment.getBoolean(Se.HEADLESS));
+            webDriver = new HyperWebDriver(webDriverType, environment.get("baseUrl"), null, environment.getBoolean(Se.HEADLESS), environment.getBoolean(Se.WEBDRIVER_ENABLED));
         } catch (IllegalStateException e) {
             logger.error(e);
             throw new HyperWebDriverException("Check your driver configuration please!", e);
