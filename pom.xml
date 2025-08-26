@@ -44,7 +44,7 @@
         <pdfbox.version>2.0.19</pdfbox.version>
         <io.github.classgraph.version>LATEST</io.github.classgraph.version>
         <org.eclipse.jgit.version>5.1.3.201810200350-r</org.eclipse.jgit.version>
-        <slf4j.version>2.0.3</slf4j.version>
+        <slf4j.version>2.0.17</slf4j.version>
         <log4j.version>2.22.1</log4j.version>
         <jackson.version>2.14.0</jackson.version>
         <javalin.version>4.6.7</javalin.version>
